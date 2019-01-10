@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdf
+  labels:
+    app: pdf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdf
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pdf
+    spec:
+      containers:
+      - image: 118504922878.dkr.ecr.us-east-1.amazonaws.com/cloudnative/soc_pdf_tomcat:0.3.0
+        name: pdf
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8083
+        resources:
+          limits:
+            memory: "400Mi"
+          requests:
+            cpu: 500m
+            memory: "370Mi"

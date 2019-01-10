@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pdf-ingress
+spec:
+  rules:
+  - host: pdf-ingress
+    http:
+      paths:
+      - backend:
+          serviceName: pdf
+          servicePort: 8083
