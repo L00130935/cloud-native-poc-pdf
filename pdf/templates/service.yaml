@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "pdf.name" . }}
+  labels:
+    app: {{ template "pdf.name" . }}
+    chart: {{ template "pdf.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ template "pdf.name" . }}-pdf-port
+      protocol: TCP
+      name: {{ template "pdf.name" . }}-pdf-port
+  selector:
+    app: {{ template "pdf.name" . }}
+    release: {{ .Release.Name }}

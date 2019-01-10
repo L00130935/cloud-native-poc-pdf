@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "pdf.fullname" . }}
+  labels:
+    app: {{ template "pdf.name" . }}
+    chart: {{ template "pdf.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "pdf.name" . }}
+      release: {{ .Release.Name }}      
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ template "pdf.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: {{template "pdf.name" . }}-pdf-port
+              containerPort: 8083
+              protocol: TCP
