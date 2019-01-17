@@ -9,6 +9,7 @@ plugins {
 	id 'org.springframework.boot' version '2.0.1.RELEASE'
 	id "net.saliman.properties" version "1.4.6"
 	id "com.patdouble.awsecr" version "0.4.0"
+        id "com.bmuschko.nexus" version "2.3.1"
 }
 
 /*
@@ -29,6 +30,10 @@ import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 import com.bmuschko.gradle.docker.tasks.container.*
+
+archivesBaseName = 'cloud-native-poc-pdf'
+version = "0.1.0"
+group = "com.prudential.soc"
 
 sourceCompatibility = 1.9
 targetCompatibility = 1.9
@@ -55,9 +60,16 @@ dependencies {
 	compile group: 'org.apache.pdfbox', name:'pdfbox', version:'1.8.9'
 	compile group: 'org.jsoup', name:'jsoup', version:'1.11.2'
 	compile group: 'io.micrometer', name:'micrometer-registry-prometheus', version:'1.0.5'
+        compile group: 'com.prudential.soc', name:'cloud-native-poc-pdf-api', version:'0.1.2'
 
-	compile project (':cloud-native-poc-pdf-api')
+//	compile project (':cloud-native-poc-pdf-api')
     compile fileTree(dir: 'lib', includes: ['*.jar', '*.zip'])
+}
+
+nexus {
+  sign = false
+  repositoryUrl = 'http://nexus.jx.192.168.99.102.nip.io/repository/maven-releases/'
+  snapshotRepositoryUrl = 'http://nexus.jx.192.168.99.102.nip.io/repository/maven-snapshots/'
 }
 
 bootJar {
