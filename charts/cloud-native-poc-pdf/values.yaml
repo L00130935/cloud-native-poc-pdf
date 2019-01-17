@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: draft
-  tag: dev
+  repository: 10.102.106.126:5000/l00130935/cloud-native-poc-pdf
+  tag: 0.0.9
   pullPolicy: IfNotPresent
 service:
   name: cloud-native-poc-pdf
